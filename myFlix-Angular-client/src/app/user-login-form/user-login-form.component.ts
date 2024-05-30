@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UserLoginFormComponent implements OnInit {
 
-  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
+  @Input() userData = { Username: '', Password: '', };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -26,15 +26,16 @@ export class UserLoginFormComponent implements OnInit {
     this.fetchApiData.userLogin(this.userData).subscribe((result) => {
       localStorage.setItem('user', JSON.stringify(result.user));
       localStorage.setItem('token', result.token);
-      this.dialogRef.close();
-      this.snackBar.open(result, 'OK', {
+      this.dialogRef.close(); // Will close modal on success
+      this.snackBar.open('User login successful', 'OK', {
         duration: 2000
       });
       this.router.navigate(['movies'])
     }, (result) => {
-      this.snackBar.open(result, 'OK', {
+      this.snackBar.open('User login failed', 'OK', {
         duration: 2000
       });
     });
   }
+
 }
