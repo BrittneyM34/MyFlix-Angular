@@ -1,4 +1,20 @@
 <div>
+    <nav>
+        <button
+            mat-button
+            color="primary"
+            (click)="redirectProfile()"
+        >
+            User Profile
+        </button>
+        <button
+            mat-button
+            color="primary"
+            (click)="logoutUser()"
+        >
+            Logout
+    </button>
+    </nav>
     <div style="display: flex;">
         <mat-card *ngFor="let movie of movies;" style="flex: 1 1 auto;">
         <mat-card-header>

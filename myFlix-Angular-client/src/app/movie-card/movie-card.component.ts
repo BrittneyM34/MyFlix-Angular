@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-movie-card',
@@ -9,17 +11,32 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 export class MovieCardComponent {
 
   movies: any[] = [];
-  constructor(public fetchApiData: FetchApiDataService) { }
+  constructor(
+    public fetchApiData: FetchApiDataService,
+    public router: Router,
+    public dialog: MatDialog
+
+  ) { }
 
   ngOnInit(): void {
     this.getMovies();
   }
 
   getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-        this.movies = resp;
-        console.log(this.movies);
-        return this.movies;
-      });
-    }
+    this.fetchApiData.getAllMovies().subscribe((response: any) => {
+      this.movies = response;
+      console.log(this.movies);
+      return this.movies;
+    });
   }
+
+  logoutUser(): void {
+    this.router.navigate(["welcome"]);
+    localStorage.removeItem("user");
+  }
+
+  redirectProfile(): void {
+    this.router.navigate(["profile"]);
+  }
+
+}
