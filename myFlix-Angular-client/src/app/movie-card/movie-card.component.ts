@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import  { MessageBoxComponent } from '../message-box/message-box.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -38,5 +39,37 @@ export class MovieCardComponent {
   redirectProfile(): void {
     this.router.navigate(["profile"]);
   }
+
+  showGenre(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.genre.name,
+        content: movie.genre.description
+      },
+      width: "400px"
+    })
+  }
+
+  showDirector(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.director.name,
+        content: movie.director.bio
+      },
+      width: "400px"
+    })
+  }
+
+  showDetails(movie: any): void {
+    this.dialog.open(MessageBoxComponent, {
+      data: {
+        title: movie.title,
+        content: movie.description
+      },
+      width: "400px"
+    })
+  }
+
+
 
 }
