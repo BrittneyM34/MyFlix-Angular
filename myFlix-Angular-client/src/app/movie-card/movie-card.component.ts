@@ -9,7 +9,7 @@ import { MessageBoxComponent } from '../message-box/message-box.component';
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss']
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
