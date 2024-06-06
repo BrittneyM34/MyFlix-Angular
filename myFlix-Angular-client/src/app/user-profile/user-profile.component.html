@@ -1,11 +1,10 @@
-    <mat-card-actions>
         <button
-        mat-raised-button
-        (click)="logoutUser()"
-        color="primary"
-        style="margin-right: 10px"
+            mat-raised-button
+            (click)="logoutUser()"
+            color="primary"
+            style="margin-right: 10px"
         >
-        Logout
+            Logout
         </button>
     <mat-card>
         <mat-card-header>
@@ -81,5 +80,27 @@
             Back to movies
             </button>
         </mat-card-actions>
+
+        <!-- Favorite movies -->
+    <mat-card-title>Favorite Movies</mat-card-title>
+        <div style="display:flex;">
+            <mat-card *ngFor="let movie of this.favoriteMovies;" style="width: 280px; margin-right: 10px;">
+                <mat-card-header>
+                    <mat-card-title>{{movie.title}}</mat-card-title>
+                    <mat-card-subtitle>Directed by: {{movie.director.name}}</mat-card-subtitle>
+                </mat-card-header>
+                <img src={{movie.ImagePath}} alt="{{movie.title}}" />
+                <mat-card-actions>
+                    <button
+                        mat-raised-button
+                        (click)="deleteFavoriteMovie(movie)"
+                        color="primary"
+                        style="margin-right: 10px"
+                    >
+                        Remove from favorites
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </mat-card>
 

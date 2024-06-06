@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import  { MessageBoxComponent } from '../message-box/message-box.component';
+import { MessageBoxComponent } from '../message-box/message-box.component';
 
 @Component({
   selector: 'app-movie-card',
@@ -10,7 +10,6 @@ import  { MessageBoxComponent } from '../message-box/message-box.component';
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent {
-
   movies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -26,9 +25,15 @@ export class MovieCardComponent {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
-      console.log(this.movies);
+
+      let user = JSON.parse(localStorage.getItem("user") || "");
+      this.movies.forEach((movie: any) => {
+        movie.isFavorite = user.favoriteMovies.includes(movie._id);
+      })
       return this.movies;
-    });
+    }, error => {
+      console.error(error)
+    })
   }
 
   logoutUser(): void {
@@ -70,6 +75,34 @@ export class MovieCardComponent {
     })
   }
 
+  modifyFavoriteMovies(movie: any): void {
+    let user = JSON.parse(localStorage.getItem("user") || "");
+    let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
+    if (user.favoriteMovies.includes(movie._id)) {
+      this.fetchApiData.deleteFavoriteMovie(user.id, movie.title).subscribe(result => {
+        icon?.setAttribute("fontIcon", "favorite_border");
 
+        console.log("delete successful");
+        console.log(result);
+        user.favoriteMovies = result.favoriteMovies;
+        localStorage.setItem("user", JSON.stringify(user));
+      }, error => {
+        console.error(error)
+      })
+    } else {
+      this.fetchApiData.addFavoriteMovie(user.id, movie.title).subscribe(result => {
+        icon?.setAttribute("fontIcon", "favorite");
+
+        console.log("add successful")
+        console.log(result);
+        user.favoriteMovies = result.favoriteMovies;
+        localStorage.setItem("user", JSON.stringify(user));
+      }, error => {
+        console.error(error)
+      })
+    }
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+  
 }
