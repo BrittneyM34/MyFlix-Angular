@@ -23,8 +23,8 @@ export class MovieCardComponent implements OnInit {
   }
 
   getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((response: any) => {
-      this.movies = response;
+    this.fetchApiData.getAllMovies().subscribe((result: any) => {
+      this.movies = result;
 
       let user = JSON.parse(localStorage.getItem("user") || "");
       this.movies.forEach((movie: any) => {
@@ -79,8 +79,8 @@ export class MovieCardComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem("user") || "");
     let icon = document.getElementById(`${movie._id}-favorite-icon`);
 
-    if (user.favoriteMovies?.includes(movie._id)) {
-      this.fetchApiData.deleteFavoriteMovie(user.id, movie.title).subscribe(result => {
+    if (user.favoriteMovies.includes(movie._id)) {
+      this.fetchApiData.deleteFavoriteMovie(user.username, movie._id).subscribe(result => {
         icon?.setAttribute("fontIcon", "favorite_border");
 
         console.log("delete successful");
@@ -91,7 +91,7 @@ export class MovieCardComponent implements OnInit {
         console.error(error)
       })
     } else {
-      this.fetchApiData.addFavoriteMovie(user.id, movie.title).subscribe(result => {
+      this.fetchApiData.addFavoriteMovie(user.username, movie._id).subscribe(result => {
         icon?.setAttribute("fontIcon", "favorite");
 
         console.log("add successful")
