@@ -115,7 +115,7 @@ export class FetchApiDataService {
         })
     }).pipe(
       map(this.extractResponseData),
-      map((data) => data.FavoriteMovie),
+      map((data) => data.favoriteMovies),
       catchError(this.handleError)
     );
   }

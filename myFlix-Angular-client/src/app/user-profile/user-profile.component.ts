@@ -15,7 +15,8 @@ export class UserProfileComponent implements OnInit {
   favoriteMovies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
-    private router: Router) {
+    private router: Router
+  ) {
     this.userData = JSON.parse(localStorage.getItem("user") || "");
   }
 
@@ -81,8 +82,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   deleteFavoriteMovie(movie: any): void {
-    this.fetchApiData.deleteFavoriteMovie(this.userData.id, movie.title).subscribe((result: any) => {
-      this.userData.favoriteMovies = result.favoriteMovies;
+    this.fetchApiData.deleteFavoriteMovie(this.userData.id, movie.title).subscribe((response: any) => {
+      this.userData.favoriteMovies = response.favoriteMovies;
       this.getFavoriteMovies();
     }, (error: any) => {
       console.error(error)
