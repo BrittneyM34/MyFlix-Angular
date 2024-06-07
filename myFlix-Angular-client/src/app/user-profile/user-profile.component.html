@@ -1,3 +1,4 @@
+<mat-card-actions>
         <button
             mat-raised-button
             (click)="logoutUser()"
@@ -6,11 +7,20 @@
         >
             Logout
         </button>
+            <button
+            mat-raised-button
+            (click)="backToMovies()"
+            color="primary"
+            >
+            Back to movies
+            </button>
+</mat-card-actions>
     <mat-card>
         <mat-card-header>
             <mat-card-title>User Profile</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+
             <form>
                 <mat-form-field style="margin-right: 10px">
                     <label>Username</label>
@@ -70,14 +80,7 @@
             (click)="deleteUser()"
             color="primary"
             >
-            Delete user
-            </button>
-            <button
-            mat-raised-button
-            (click)="backToMovies()"
-            color="primary"
-            >
-            Back to movies
+            Delete profile
             </button>
         </mat-card-actions>
 
@@ -89,7 +92,7 @@
                     <mat-card-title>{{movie.title}}</mat-card-title>
                     <mat-card-subtitle>Directed by: {{movie.director.name}}</mat-card-subtitle>
                 </mat-card-header>
-                <img src={{movie.ImagePath}} alt="{{movie.title}}" />
+                <img src={{movie.ImagePath}} alt="{{movie.title}}" style="height: 300px; width: 200px;" (click)="showDetails(movie)" />
                 <mat-card-actions>
                     <button
                         mat-raised-button

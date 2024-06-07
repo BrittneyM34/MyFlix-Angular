@@ -3,6 +3,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../message-box/message-box.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-card',
@@ -14,7 +15,8 @@ export class MovieCardComponent implements OnInit {
   constructor(
     public fetchApiData: FetchApiDataService,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
 
   ) { }
 
@@ -87,6 +89,9 @@ export class MovieCardComponent implements OnInit {
         console.log(result);
         user.favoriteMovies = result.favoriteMovies;
         localStorage.setItem("user", JSON.stringify(user));
+        this.snackBar.open('Movie deleted from favorites', 'OK', {
+          duration: 2000
+        });
       }, error => {
         console.error(error)
       })
@@ -98,6 +103,9 @@ export class MovieCardComponent implements OnInit {
         console.log(result);
         user.favoriteMovies = result.favoriteMovies;
         localStorage.setItem("user", JSON.stringify(user));
+        this.snackBar.open('Movie added to favorites', 'OK', {
+          duration: 2000
+        });
       }, error => {
         console.error(error)
       })

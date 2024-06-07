@@ -15,7 +15,8 @@ export class UserProfileComponent implements OnInit {
   favoriteMovies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
-    private router: Router
+    private router: Router,
+    public snackBar: MatSnackBar
   ) {
     this.userData = JSON.parse(localStorage.getItem("user") || "");
   }
@@ -57,7 +58,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    this.fetchApiData.getUser(this.userData).subscribe((result: any) => {
+    this.fetchApiData.getUser(this.userData.username).subscribe((result: any) => {
       this.userData = {
         ...result,
         id: result._id,
@@ -82,9 +83,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   deleteFavoriteMovie(movie: any): void {
-    this.fetchApiData.deleteFavoriteMovie(this.userData.id, movie.title).subscribe((response: any) => {
+    this.fetchApiData.deleteFavoriteMovie(this.userData.username, movie._id).subscribe((response: any) => {
       this.userData.favoriteMovies = response.favoriteMovies;
       this.getFavoriteMovies();
+      this.snackBar.open('Movie removed from favorites', 'OK', {
+        duration: 2000
+      });
     }, (error: any) => {
       console.error(error)
     })
