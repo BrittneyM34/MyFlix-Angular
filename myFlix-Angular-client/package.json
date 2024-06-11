@@ -7,7 +7,8 @@
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "typedoc": "typedoc src/app --exclude '**/*.spec.ts'"
   },
   "private": true,
   "dependencies": {

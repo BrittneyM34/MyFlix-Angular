@@ -15,7 +15,11 @@ export class FetchApiDataService {
   constructor(private http: HttpClient) {
   }
 
-  // Making the api call for the user registration endpoint
+  /**
+   * create new user
+   * @param {Object} userDetails must include username, password, email, and birthday
+   * @returns 
+   */
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http.post(apiUrl + 'users', userDetails).pipe(
@@ -23,7 +27,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the user login endpoint
+  /**
+   * login
+   * @param {Object} userDetails must include username and password
+   * @returns 
+   */
   public userLogin(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http.post(apiUrl + 'login', userDetails).pipe(
@@ -31,7 +39,10 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Get All Movies endpoint
+  /**
+   * get all movies
+   * @returns array of movies, if token is false, status 401
+   */
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {headers: new HttpHeaders(
@@ -49,7 +60,11 @@ export class FetchApiDataService {
     return body || {};
   }
   
-  // Making the api call for the Get One Movie endpoint
+  /**
+   * get movie with title
+   * @param {string} title 
+   * @returns movie object. if movie doesn't exist, 'no such movie'. if token is false, 'unauthorized'
+   */
   getOneMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/' + title, {
@@ -63,7 +78,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Get Director endpoint
+  /**
+   * get director with name
+   * @param {string} directorName 
+   * @returns director object. if director doesn't exist, 'no such director'. if token is false, 'unauthorized'
+   */
   getDirector(directorName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/directors/' + directorName, {
@@ -77,7 +96,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Get Genre endpoint
+  /**
+   * get genre with name
+   * @param {string} genreName 
+   * @returns genre object. if genre doesn't exist, 'no such genre'. if token is false, 'unauthorized'
+   */
   getGenre(genreName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies/genres' + genreName, {
@@ -91,7 +114,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Get User endpoint
+  /**
+   * get user with username
+   * @param {string} username 
+   * @returns user object. if user doesn't exist, 'no such user'. if token is false, 'unauthorized'
+   */
   getUser(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'users/' + username, {
@@ -105,7 +132,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Get Favorite Movie endpoint
+  /**
+   * get favorite movie
+   * @param username 
+   * @returns favorite movies object. if favorite movies don't exist, 'no favorite movies'. if token is false, 'unauthorized'
+   */
   getFavoriteMovie(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'users/' + username, {
@@ -120,7 +151,12 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Add a Movie to Favorites endpoint
+  /**
+   * add movie to user's favorites list
+   * @param username 
+   * @param movieID 
+   * @returns if add movie is successful 'user object'. if movie doesn't exist, 'no such movie'. if token is false, 'unauthorized'
+   */
   addFavoriteMovie(username: string, movieID: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.post(apiUrl + 'users/' + username + '/movies/' + movieID, {}, {
@@ -134,7 +170,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Edit User endpoint
+  /**
+   * edit user
+   * @param username must incluse username
+   * @returns if update user's details is successful, user object. if token is false, 'unauthorized'
+   */
   editUser(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.put(apiUrl + 'users/' + username, {
@@ -149,7 +189,11 @@ export class FetchApiDataService {
     );
   }
 
-  // Making the api call for the Delete user endpoint
+  /**
+   * delete user
+   * @param username 
+   * @returns if delete user was successful, '${username} was deleted'. if token is false, 'unauthorized'
+   */
   deleteUser(username: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.delete(apiUrl + 'users/' + username, {
@@ -164,6 +208,12 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+   * delete a movie from favorites
+   * @param username 
+   * @param movieID 
+   * @returns if delete movie was successfully, user object. if token is false, 'unauthorized'
+   */
   // Making the api call for the Delete a Movie from Favorites endpoint
   deleteFavoriteMovie(username: string, movieID: string): Observable<any> {
     const token = localStorage.getItem('token');
