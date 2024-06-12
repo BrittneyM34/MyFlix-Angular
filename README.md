@@ -15,7 +15,7 @@ This project was generated with Angular CLI version 10.0.0
 - Angular Material: A UI component library for Angular applications
 - RxJS: A library for reactive programming
 
-  ##Getting Started
+## Getting Started
 - Clone this repository
 - Install all the project dependencies:
     npm install
